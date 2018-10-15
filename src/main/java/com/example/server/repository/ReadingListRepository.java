@@ -1,5 +1,6 @@
-package com.example.server;
+package com.example.server.repository;
 
+import com.example.server.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

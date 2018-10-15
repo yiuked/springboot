@@ -17,6 +17,7 @@
         <dd class="bookDescription">
             <span th:if="${book.description}">Description</span>
             <span th:if="${book.description eq null}">No description available!</span>
+            <a th:href="'http://www.36sn.com/product/'+${book.isbn}" th:text="${book.title}">${book.title}</a>
         </dd>
     </dl>
 </div>

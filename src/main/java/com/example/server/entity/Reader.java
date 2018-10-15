@@ -1,4 +1,4 @@
-package com.example.server;
+package com.example.server.entity;
 
 import java.util.Arrays;
 import java.util.Collection;

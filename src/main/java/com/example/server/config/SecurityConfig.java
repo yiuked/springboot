@@ -1,15 +1,13 @@
-package com.example.server;
+package com.example.server.config;
 
+import com.example.server.repository.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -19,22 +17,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/").access("hasRole('READER')")
-                .antMatchers("/**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true");
+        http
+        .formLogin().loginPage("/user/login.do")
+        .defaultSuccessUrl("/free/list.do")
+        .and().authorizeRequests().antMatchers("/user/login.do").permitAll()
+        .and().authorizeRequests().antMatchers("/**/*.do").authenticated()
+        .and().httpBasic()
+        .and().csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return readerRepository.findById(username).orElse(null);
-            }
-        });
+        auth.inMemoryAuthentication().withUser("admin").password(new BCryptPasswordEncoder().encode("admin")).roles("ADMIN");
     }
 }

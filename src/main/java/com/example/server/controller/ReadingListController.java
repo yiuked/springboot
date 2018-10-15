@@ -1,5 +1,8 @@
-package com.example.server;
+package com.example.server.controller;
 
+import com.example.server.properties.SpreadProperties;
+import com.example.server.entity.Book;
+import com.example.server.repository.ReadingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +16,12 @@ import java.util.List;
 @RequestMapping("/")
 public class ReadingListController {
     private ReadingListRepository readingListRepository;
+    private SpreadProperties spreadProperties;
 
     @Autowired
-    public ReadingListController(ReadingListRepository readingListRepository) {
+    public ReadingListController(ReadingListRepository readingListRepository, SpreadProperties spreadProperties) {
         this.readingListRepository = readingListRepository;
+        this.spreadProperties = spreadProperties;
     }
 
     @RequestMapping(value = "/{reader}", method = RequestMethod.GET)
@@ -26,6 +31,7 @@ public class ReadingListController {
     ) {
         List<Book> readingList = readingListRepository.findByReader(reader);
         if (readingList != null) {
+            model.addAttribute("unionKey", spreadProperties.getUnionKey());
             model.addAttribute("books", readingList);
         }
         return "readingList";

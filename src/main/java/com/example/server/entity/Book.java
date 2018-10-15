@@ -1,4 +1,4 @@
-package com.example.server;
+package com.example.server.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +15,10 @@ public class Book {
     private String title;
     private String author;
     private  String description;
+
+    public Book(String reader) {
+        this.reader = reader;
+    }
 
     public Long getId() {
         return id;
