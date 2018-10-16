@@ -32,5 +32,5 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('mysql:mysql-connector-java')
-	compile('org.springframework.boot:spring-boot-devtools:true')
+	compile('org.springframework.boot:spring-boot-starter-aop')
 }

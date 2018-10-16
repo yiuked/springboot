@@ -42,4 +42,13 @@ public class Girl {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String toString() {
+        return "Girl{" +
+                "girlId=" + girlId +
+                ", age=" + age +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }
